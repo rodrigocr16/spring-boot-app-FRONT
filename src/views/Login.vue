@@ -12,6 +12,7 @@
         <input type="password" id="inputPassword" required v-model="senha">
         </p>
         <button type="submit">Ok</button>
+        <p id = "msgErro">{{ getErro }}</p>
     </form>
   </div>
 </template>
@@ -19,6 +20,7 @@
 <script>
   import axios from 'axios';
   import { mapMutations } from 'vuex';
+  import { mapGetters } from 'vuex';
 
   export default {
     name: 'Home',
@@ -28,12 +30,23 @@
         senha: ''
       }
     },
+    mounted() {
+      this.setCodErro('');
+    },
+    computed: {
+      ...mapGetters([
+        'getErro'
+      ])
+    },
     methods: {
       ...mapMutations([
         'setUsuario',
-        'setSenha'
+        'setSenha',
+        'setLogado',
+        'setCodErro'
       ]),
       login() {
+        
         axios.get('usuario', {
           params: { "nomeUsuario" : this.nome }, headers: { Accept: 'application/json' },
           auth: { username: this.nome, password: this.senha }
@@ -43,6 +56,7 @@
           this.sucesso();
         })
         .catch(error => {
+          this.setCodErro('Usuário/senha inválido(s)!');
           console.log(error);
           switch(error.response.status){
             case 400: console.log('Usuário inválido!');
@@ -53,13 +67,18 @@
               break;
             default: this.sucesso();
             }
+            this.nome = '';
+            this.senha = '';
         });
       },
       sucesso(){
+        this.setCodErro('');
         this.setUsuario(this.nome);
         this.setSenha(this.senha);
-        this.$router.push('/home');
+        this.setLogado();
+        this.$router.push('/');
       }
+      
     }
   }
 </script>
@@ -75,5 +94,9 @@
   }
   button{
     width: 75px;
+  }
+  #msgErro{
+    margin-top: 50px;
+    color: red;
   }
 </style>

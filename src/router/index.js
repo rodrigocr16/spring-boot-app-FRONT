@@ -8,12 +8,20 @@ Vue.use(VueRouter)
 
   const routes = [
   {
-    path: '/Home',
+    path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    beforeEnter: (to, from, next) => {
+      if(!store.state.logado) {
+        router.push('/Login');
+      } else {
+        next()
+      }
+      
+    }
   },
   {
-    path: '/',
+    path: '/Login',
     name: 'Login',
     component: Login
   },
@@ -34,7 +42,7 @@ Vue.use(VueRouter)
   */
 
   {
-    path: '/about',
+    path: '/About',
     name: 'About',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route

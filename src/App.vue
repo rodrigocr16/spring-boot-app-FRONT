@@ -9,8 +9,10 @@
           @click="$store.commit('alteraPermiteNavegacao')"/>
       </p>
       -->
-      <router-link to="/">Home</router-link> |
+      <router-link v-if="getLogado == false" to="/Login">Home</router-link>
+      <router-link v-else to="/">Home</router-link> |
       <router-link to="/about">Sobre</router-link>
+      <button @click="$store.commit('setDeslogado'),$router.push('/Login');" v-if="getLogado == true"> Deslogar </button>
     </div>
     <router-view/>
     <footer>
@@ -20,6 +22,20 @@
     </footer>
   </div>
 </template>
+
+<script>
+import { mapGetters } from 'vuex';
+export default {
+  computed: {
+    ...mapGetters([
+      'getLogado'
+    ])
+  },
+  methods: {
+  }
+}
+</script>
+
 
 <style>
   #app {

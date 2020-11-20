@@ -15,13 +15,19 @@ export default new Vuex.Store({
   state: {      // variáveis compartilháveis através da aplicação
     usuario: '',
     senha: '',
-    cod_erro: false,
+    cod_erro: '',
 
     permiteNavegacao: true,
     logado: false,
     app_adm: false
   },
   getters :{
+    getLogado(state){
+      return state.logado;
+    },
+    getErro(state){
+      return state.cod_erro;
+    }
   },
   mutations: {  // métodos para setar as variáveis State
     setUsuario(state, valor){
@@ -32,6 +38,12 @@ export default new Vuex.Store({
     },
     setCodErro(state, valor){
       state.cod_erro = valor;
+    },
+    setLogado(state){
+      state.logado = true;
+    },
+    setDeslogado(state){
+      state.logado = false;
     },
 
     alteraPermiteNavegacao (state) {
