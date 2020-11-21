@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
+import Usuario from '../views/Usuario.vue'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -13,36 +14,24 @@ Vue.use(VueRouter)
     component: Home,
     beforeEnter: (to, from, next) => {
       if(!store.state.logado) {
-        router.push('/Login');
+        router.push('/login');
       } else {
         next()
-      }
-      
+      }      
     }
   },
   {
-    path: '/Login',
+    path: '/usuario',
+    name: 'Usuario',
+    component: Usuario
+  },
+  {
+    path: '/login',
     name: 'Login',
     component: Login
   },
-  /*
   {
-    path: '/alo/:nome',
-    name: 'alo',
-    component: Alo,
-    props: true,
-    beforeEnter: (to, from, next) => {
-      if (from.name !== 'About') {
-        next()
-      } else {
-        next(false)
-      }
-    }
-  },
-  */
-
-  {
-    path: '/About',
+    path: '/about',
     name: 'About',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route

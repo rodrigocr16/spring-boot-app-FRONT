@@ -1,18 +1,16 @@
 <template>
   <div id="app">
     <div id="nav">
-      <!--
-      <p>
-        <label for="inputNav">Permite navegação?</label>
-        <input id="inputNav" type="checkbox"
-          :checked="$store.state.permiteNavegacao"
-          @click="$store.commit('alteraPermiteNavegacao')"/>
-      </p>
-      -->
-      <router-link v-if="getLogado == false" to="/Login">Home</router-link>
+      <router-link v-if="getLogado == false" to="/login">Home</router-link>
       <router-link v-else to="/">Home</router-link> |
       <router-link to="/about">Sobre</router-link>
-      <button @click="$store.commit('setDeslogado'),$router.push('/Login');" v-if="getLogado == true"> Deslogar </button>
+      <a id="logout" 
+         v-if="getLogado == true"
+         @click="$store.commit('setDeslogado'),
+         $router.push('/login')
+         "> Logout </a>
+      <!--<router-link v-if="getLogado == true" to="/login" id="logout" @click="$store.commit('setDeslogado')">Logout</router-link>-->
+      <!--<button @click="$store.commit('setDeslogado'),$router.push('/Login');" v-if="getLogado == true"> Deslogar </button>-->
     </div>
     <router-view/>
     <footer>
@@ -56,13 +54,19 @@ export default {
     color: #d10000;
   }
   footer{
-    position: fixed; bottom: 0px;
+    position: relative;
     right: 0%; left: 0%;
+    margin-top: 300px;
   }  
   body{
     background-image: url("../src/assets/background.png");
     background-position: top;
     background-repeat: no-repeat;
     background-size: 1920px;
-  }  
+    background-attachment: fixed;
+  }
+  #logout{
+    position: absolute; right: 50px;
+    cursor: pointer;
+  }
 </style>

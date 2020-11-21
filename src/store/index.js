@@ -17,7 +17,6 @@ export default new Vuex.Store({
     senha: '',
     cod_erro: '',
 
-    permiteNavegacao: true,
     logado: false,
     app_adm: false
   },
@@ -27,6 +26,15 @@ export default new Vuex.Store({
     },
     getErro(state){
       return state.cod_erro;
+    },
+    getAdmin(state){
+      return state.app_adm;
+    },
+    getUsuario(state){
+      return state.usuario;
+    },
+    getSenha(state){
+      return state.senha;
     }
   },
   mutations: {  // métodos para setar as variáveis State
@@ -44,10 +52,10 @@ export default new Vuex.Store({
     },
     setDeslogado(state){
       state.logado = false;
+      state.app_adm = false;
     },
-
-    alteraPermiteNavegacao (state) {
-      state.permiteNavegacao = !state.permiteNavegacao
+    setAdmin(state){
+      state.app_adm = true;
     }
   },
   actions: {    // realiza operações assíncronas que alteram State (acessar BD)

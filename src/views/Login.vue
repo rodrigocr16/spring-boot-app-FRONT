@@ -27,7 +27,8 @@
     data() {
       return {
         nome: '',
-        senha: ''
+        senha: '',
+        clearance: ''
       }
     },
     mounted() {
@@ -43,7 +44,8 @@
         'setUsuario',
         'setSenha',
         'setLogado',
-        'setCodErro'
+        'setCodErro',
+        'setAdmin'
       ]),
       login() {
         
@@ -54,14 +56,16 @@
         .then(res => {
           console.log(res);
           this.sucesso();
+          this.clearance = res.data;
+          if(this.clearance.classificacao > 0) { this.setAdmin(); }
         })
         .catch(error => {
           this.setCodErro('Usuário/senha inválido(s)!');
           console.log(error);
           switch(error.response.status){
-            case 400: console.log('Usuário inválido!');
+            case 400: console.log('Bad request');
               break;
-            case 401: console.log('Usuário/senha inválido(s)!');
+            case 401: console.log('Senha inválida!');
               break;
             case 404: console.log('Usuário não cadastrado!');
               break;
