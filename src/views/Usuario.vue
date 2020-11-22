@@ -33,7 +33,27 @@
       <br>
       <h2 @click="atu_show = !atu_show">Atualizar Usuários</h2>
         <div v-if="atu_show">
-            Aqui vou atualizar!
+          <form @submit.prevent="atualizar">
+            <h3>Usuario a atualizar</h3>
+            <div class="form-group">
+                <br>Nome do Usuário: {{ put_usuario }}<br>
+                <input type="text" id="txt_put_usuario"
+                  class="form-control" required autofocus
+                  v-model="put_usuario"
+                >
+                <br>Nova Senha: {{ put_senha }}<br>
+                <input type="password" id="put_senha"
+                  class="form-control" required
+                  v-model="put_senha"
+                >
+                <br>Novo Nome de Exibicao: {{ put_exibicao }}<br>
+                <input type="text" id="put_nome_exibicao"
+                  class="form-control" required
+                  v-model="put_exibicao"
+                >                
+                <p><button type="submit">Salvar</button></p>
+            </div>
+          </form>
         </div>
       <br>
       <h2 @click="list_show = !list_show">Listar Usuários</h2>
@@ -76,10 +96,6 @@
 </template>
 
 <script>
-
-
-
-
 import axios from 'axios';
 import { mapState } from 'vuex';
 import { mapGetters } from 'vuex';
@@ -97,6 +113,9 @@ export default {
       list_show: false,
       del_show: false,
       del_nome_usuario: '',
+      put_usuario: '',
+      put_senha: '',
+      put_exibicao: ''
     }
   },
   computed: {
@@ -110,6 +129,32 @@ export default {
     ])
   },
   methods: {
+    atualizar(){
+      axios.put('usuario', {
+        params: { "nomeUsuario" : this.put_nome_usuario },
+        headers: { Accept: 'application/json' },
+        auth: { username: this.getUsuario, password: this.getSenha },
+        body: { nomeUsuario: this.put_usuario, senha: this.put_senha, nomeExibicao: this.put_exibicao }
+      })
+      .then(res => {
+        console.log(res);
+      })
+      .catch(error => {
+          console.log(error);
+          switch(error.response.status){
+            case 400: console.log('Bad request');
+              break;
+            case 401: console.log('Senha inválida!');
+              break;
+            case 404: console.log('Usuário não cadastrado!');
+              break;
+            default: console.log('Houston, we have a problem!');
+            }
+      })
+      this.put_senha = '';
+      this.put_usuario = '';
+      this.put_exibicao = '';
+    },
     deletar(){
       axios.delete('usuario', {
         params: { "nomeUsuario" : this.del_nome_usuario },
@@ -157,31 +202,11 @@ export default {
           this.listas.push(res.data);
         })
         .catch(error => console.log(error))
-    },
-    atualizar () {
-      axios.get('usuario?id=' + this.usu_id, 
-          { headers: { Accept: 'application/json' } })
-        .then(res => {
-          console.log(res)
-          this.frases = res.data
-        })
-        .catch(error => console.log(error))
-    }
-    },
-    created () {
-        this.atualizar()
-    },
-    lst(){
-        axios.get('usuario',
-        { params: { nomeUsuario: this.usu_nome_usuario }, headers: { Accept: 'application/json' }, 
-        auth: {
-                username:this.usuario,
-                password:this.senha
-            }})
+      }
     }
 }
 </script>
-/*
+
 <style>
   p{
     opacity: 80%;
