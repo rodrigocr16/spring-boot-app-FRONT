@@ -130,11 +130,17 @@ export default {
   },
   methods: {
     atualizar(){
-      axios.put('usuario', {
-        params: { "nomeUsuario" : this.put_nome_usuario },
-        headers: { Accept: 'application/json' },
-        auth: { username: this.getUsuario, password: this.getSenha },
-        body: { nomeUsuario: this.put_usuario, senha: this.put_senha, nomeExibicao: this.put_exibicao }
+      axios.put('usuario?nomeUsuario=' + this.put_usuario, {
+        nomeUsuario: this.put_usuario,
+        senha: this.put_senha,
+        nomeExibicao: this.put_exibicao
+      },
+      {
+        auth: { username: this.getUsuario, password: this.getSenha }
+        //params: { "nomeUsuario" : this.put_usuario },
+        //headers: { Accept: 'application/json' },
+        //auth: { username: this.getUsuario, password: this.getSenha },
+        //body: { nomeUsuario: this.put_usuario, senha: this.put_senha, nomeExibicao: this.put_exibicao }
       })
       .then(res => {
         console.log(res);
