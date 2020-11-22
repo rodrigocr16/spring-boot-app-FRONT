@@ -8,26 +8,19 @@
         <div v-if="cad_show">
             <form @submit.prevent="cadastrar">
                 <h3>Insira os dados do novo usuário</h3>
-                <div>
-                    <label for="usu_nome_usuario">Nome do Usuário:</label> 
-                    <input type="text" id="usu_nome_usuario"
+                    <br><label for="cad_usuario">Nome do Usuário:</label><br>
+                    <input type="text" id="cad_usuario"
                         required autofocus
-                        v-model="usu_nome_usuario"> 
-                </div>
-                <div>
-                    <label for="usu_senha">Senha:</label> 
-                    <input type="password" id="usu_senha"
+                        v-model="cad_usuario"> 
+                    <br><label for="cad_senha">Senha:</label><br>
+                    <input type="password" id="cad_senha"
                         required autofocus
-                        v-model="usu_senha"> 
-                </div>
-                <div>
-                    <label for="usu_nome_exibicao">Nome de Exibição:</label> 
-                    <input type="text" id="usu_nome_exibicao"
+                        v-model="cad_senha"> 
+                    <br><label for="cad_exibicao">Nome de Exibição:</label><br>
+                    <input type="text" id="cad_exibicao"
                         required autofocus
-                        v-model="usu_nome_exibicao"> 
-                </div>
-                <br>
-                <button type="submit">Salvar</button>
+                        v-model="cad_exibicao">
+                <p><button type="submit">Salvar</button></p>
             </form>
         </div>
       <br>
@@ -36,18 +29,18 @@
           <form @submit.prevent="atualizar">
             <h3>Usuario a atualizar</h3>
             <div class="form-group">
-                <br>Nome do Usuário: {{ put_usuario }}<br>
-                <input type="text" id="txt_put_usuario"
+                <br>Nome do Usuário:<br>
+                <input type="text" id="put_usuario"
                   class="form-control" required autofocus
                   v-model="put_usuario"
                 >
-                <br>Nova Senha: {{ put_senha }}<br>
+                <br>Nova Senha:<br>
                 <input type="password" id="put_senha"
                   class="form-control" required
                   v-model="put_senha"
                 >
-                <br>Novo Nome de Exibicao: {{ put_exibicao }}<br>
-                <input type="text" id="put_nome_exibicao"
+                <br>Novo Nome de Exibicao:<br>
+                <input type="text" id="put_exibicao"
                   class="form-control" required
                   v-model="put_exibicao"
                 >                
@@ -84,7 +77,7 @@
             <h3>Insira o nome do usuário</h3>
             <div class="form-group">
                 <h4>Nome do Usuário:</h4> 
-                <input type="text" id="del_nome_usuario"
+                <input type="text" id="del_usuario"
                 class="form-control" required autofocus
                 v-model="del_nome_usuario"> 
                 <p><button type="submit">DELETAR!</button></p>
@@ -103,19 +96,11 @@ export default {
   name: 'usu',
   data() {
     return {
-      usu_id: '',
-      usu_nome_usuario: '',
-      usu_senha: '',
-      usu_nome_exibicao:'',
+      cad_usuario: '', cad_senha: '', cad_exibicao:'',
       listas: [],
-      cad_show: false,
-      atu_show: false,
-      list_show: false,
-      del_show: false,
-      del_nome_usuario: '',
-      put_usuario: '',
-      put_senha: '',
-      put_exibicao: ''
+      cad_show: false, atu_show: false, list_show: false, del_show: false,
+      del_usuario: '',
+      put_usuario: '', put_senha: '', put_exibicao: ''
     }
   },
   computed: {
@@ -135,12 +120,7 @@ export default {
         senha: this.put_senha,
         nomeExibicao: this.put_exibicao
       },
-      {
-        auth: { username: this.getUsuario, password: this.getSenha }
-        //params: { "nomeUsuario" : this.put_usuario },
-        //headers: { Accept: 'application/json' },
-        //auth: { username: this.getUsuario, password: this.getSenha },
-        //body: { nomeUsuario: this.put_usuario, senha: this.put_senha, nomeExibicao: this.put_exibicao }
+      { auth: { username: this.getUsuario, password: this.getSenha }
       })
       .then(res => {
         console.log(res);
@@ -163,7 +143,7 @@ export default {
     },
     deletar(){
       axios.delete('usuario', {
-        params: { "nomeUsuario" : this.del_nome_usuario },
+        params: { "nomeUsuario" : this.del_usuario },
         headers: { Accept: 'application/json' },
         auth: { username: this.getUsuario, password: this.getSenha }
       })
@@ -182,29 +162,27 @@ export default {
             default: console.log('Houston, we have a problem!');
             }
       })
-      this.del_nome_usuario = '';
+      this.del_usuario = '';
     },
     cadastrar() {
       axios.post('/usuario',
           {
-            id: this.usu_id,
-            nomeUsuario: this.usu_nome_usuario,
-            senha: this.usu_senha,
-            nomeExibicao:this.usu_nome_exibicao
+            nomeUsuario: this.cad_usuario,
+            senha: this.cad_senha,
+            nomeExibicao:this.cad_exibicao
           },
           {
             auth: {
-                username:this.usuario,
-                password:this.senha
+                username: this.getUsuario,
+                password: this.getSenha
             }
           }
           )
         .then(res => {
           console.log(res);
-          this.usu_id = '';
-          this.usu_nome_usuario = '';
-          this.usu_senha = '';
-          this.usu_nome_exibicao = '';
+          this.cad_usuario = '';
+          this.cad_senha = '';
+          this.cad_exibicao = '';
           this.listas.push(res.data);
         })
         .catch(error => console.log(error))
