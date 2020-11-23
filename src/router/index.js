@@ -23,7 +23,14 @@ Vue.use(VueRouter)
   {
     path: '/usuario',
     name: 'Usuario',
-    component: Usuario
+    component: Usuario,
+    beforeEnter: (to, from, next) => {
+      if(store.state.app_adm){
+        next()
+      } else {
+        router.push('/');
+      }
+    }
   },
   {
     path: '/login',

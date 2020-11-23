@@ -9,8 +9,6 @@
          @click="$store.commit('setDeslogado'),
          $router.push('/login')
          "> Logout </a>
-      <!--<router-link v-if="getLogado == true" to="/login" id="logout" @click="$store.commit('setDeslogado')">Logout</router-link>-->
-      <!--<button @click="$store.commit('setDeslogado'),$router.push('/Login');" v-if="getLogado == true"> Deslogar </button>-->
     </div>
     <router-view/>
     <footer>
