@@ -12,7 +12,7 @@ export default new Vuex.Store({
   plugins: [
     vuexPersist.plugin
   ],
-  state: {      // variáveis compartilháveis através da aplicação
+  state: {
     usuario: '',
     senha: '',
     cod_erro: '',
