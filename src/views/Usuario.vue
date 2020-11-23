@@ -24,8 +24,8 @@
             </form>
         </div>
       <br>
-      <h2 @click="atu_show = !atu_show">Atualizar Usuários</h2>
-        <div v-if="atu_show">
+      <h2 @click="put_show = !put_show">Atualizar Usuários</h2>
+        <div v-if="put_show">
           <form @submit.prevent="atualizar">
             <h3>Usuario a atualizar</h3>
             <div class="form-group">
@@ -79,7 +79,7 @@
                 <h4>Nome do Usuário:</h4> 
                 <input type="text" id="del_usuario"
                 class="form-control" required autofocus
-                v-model="del_nome_usuario"> 
+                v-model="del_usuario"> 
                 <p><button type="submit">DELETAR!</button></p>
             </div>
           </form>
@@ -96,13 +96,13 @@ export default {
   name: 'usu',
   data() {
     return {
-      cad_usuario: '', cad_senha: '', cad_exibicao:'',
-      listas: [],
-      cad_show: false, atu_show: false, list_show: false, del_show: false,
-      del_usuario: '',
-      put_usuario: '', put_senha: '', put_exibicao: ''
+      cad_show: false, cad_usuario: '', cad_senha: '', cad_exibicao: '',
+      put_show: false, put_usuario: '', put_senha: '', put_exibicao: '',
+      del_show: false, del_usuario: '',
+      list_show: true, listas: []
     }
   },
+
   computed: {
     ...mapState([
       'usuario',
@@ -113,34 +113,48 @@ export default {
       'getSenha'
     ])
   },
+
   methods: {
+    cadastrar() {
+      axios.post('/usuario', {
+        nomeUsuario: this.cad_usuario,
+        senha: this.cad_senha,
+        nomeExibicao:this.cad_exibicao
+      },
+      {
+        auth: { username: this.getUsuario, password: this.getSenha }
+      })
+      .then(res => {
+        console.log(res);
+        this.listas.push(res.data);
+      })
+      .catch(error => console.log(error))
+      this.cad_usuario = '';
+      this.cad_senha = '';
+      this.cad_exibicao = '';
+    },
+
     atualizar(){
       axios.put('usuario?nomeUsuario=' + this.put_usuario, {
         nomeUsuario: this.put_usuario,
         senha: this.put_senha,
         nomeExibicao: this.put_exibicao
       },
-      { auth: { username: this.getUsuario, password: this.getSenha }
+      {
+        auth: { username: this.getUsuario, password: this.getSenha }
       })
       .then(res => {
         console.log(res);
       })
       .catch(error => {
-          console.log(error);
-          switch(error.response.status){
-            case 400: console.log('Bad request');
-              break;
-            case 401: console.log('Senha inválida!');
-              break;
-            case 404: console.log('Usuário não cadastrado!');
-              break;
-            default: console.log('Houston, we have a problem!');
-            }
+        console.log(error);
+        this.erro(error.response.status);
       })
       this.put_senha = '';
       this.put_usuario = '';
       this.put_exibicao = '';
     },
+
     deletar(){
       axios.delete('usuario', {
         params: { "nomeUsuario" : this.del_usuario },
@@ -152,42 +166,23 @@ export default {
       })
       .catch(error => {
           console.log(error);
-          switch(error.response.status){
-            case 400: console.log('Bad request');
-              break;
-            case 401: console.log('Senha inválida!');
-              break;
-            case 404: console.log('Usuário não cadastrado!');
-              break;
-            default: console.log('Houston, we have a problem!');
-            }
+          this.erro(error.response.status);
       })
       this.del_usuario = '';
     },
-    cadastrar() {
-      axios.post('/usuario',
-          {
-            nomeUsuario: this.cad_usuario,
-            senha: this.cad_senha,
-            nomeExibicao:this.cad_exibicao
-          },
-          {
-            auth: {
-                username: this.getUsuario,
-                password: this.getSenha
-            }
-          }
-          )
-        .then(res => {
-          console.log(res);
-          this.cad_usuario = '';
-          this.cad_senha = '';
-          this.cad_exibicao = '';
-          this.listas.push(res.data);
-        })
-        .catch(error => console.log(error))
+
+    erro(codigo){
+      switch(codigo){
+        case 400: console.log('Bad request');
+          break;
+        case 401: console.log('Senha inválida!');
+          break;
+        case 404: console.log('Usuário não cadastrado!');
+          break;
+        default: console.log('Houston, we have a problem!');
       }
     }
+  }
 }
 </script>
 
