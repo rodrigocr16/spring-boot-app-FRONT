@@ -7,6 +7,7 @@
 ## 1. Apresentação
 Projeto com back-end em Java e front-end em Vue.js<br>
 Este projeto foi feito para as disciplinas de Padrões de Projetos e Laboratório de Banco de Dados IV, aplicando o padrão MVC;<br>
+
 A camada VIEW foi feita em Vue.js utilizando Axios para integração com a camada CONTROLLER que retorna através de protocolo HTTP as informações do banco em MySQL na camada MODEL, estruturada com Jpa / Hibernate.<br>
 
 Este repositório refere-se à VIEW do projeto;
