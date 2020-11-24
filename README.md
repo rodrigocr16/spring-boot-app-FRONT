@@ -1,5 +1,8 @@
-# PADRÕES DE PROJETOS / LAB-BD IV
+# PADRÕES DE PROJETOS / LABORATÓRIO DE BANCO DE DADOS IV
 ## FATEC SÃO JOSÉ DOS CAMPOS - 2ºSEM/2020
+### Professores
+• [Emanuel Mineda Carneiro](https://github.com/mineda)<br>
+• [Giuliano Araujo Bertoti](https://github.com/giulianobertoti)
 ### Integrantes
 • [Lucas José Povinske](https://github.com/lucas-povinske)<br>
 • Rodrigo César Reis
