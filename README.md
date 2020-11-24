@@ -13,8 +13,8 @@ Este projeto foi feito para as disciplinas de Padrões de Projetos e Laboratóri
 
 A camada VIEW foi feita em Vue.js utilizando Axios para integração com a camada CONTROLLER que retorna através de protocolo HTTP as informações do banco em MySQL na camada MODEL, estruturada com Jpa / Hibernate.<br>
 
-Este repositório refere-se à VIEW do projeto;
-O repositório referente à MODEL/CONTROLLER se encontram [neste endereço](https://github.com/rodrigocr16/padroes_projetos).
+Este repositório refere-se à camada VIEW do projeto;<br>
+O repositório referente às camadas MODEL e CONTROLLER se encontram [neste endereço](https://github.com/rodrigocr16/padroes_projetos).
 ___
 ## 2. Autenticação
 ![01_auth](https://github.com/rodrigocr16/vue-blank/blob/master/prints/01_invalid_auth.png)
