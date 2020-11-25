@@ -1,11 +1,12 @@
 # PADRÕES DE PROJETOS / LABORATÓRIO DE BANCO DE DADOS IV
 ## FATEC SÃO JOSÉ DOS CAMPOS - 2ºSEM/2020
 ### Professores
-• [Emanuel Mineda Carneiro](https://github.com/mineda)<br>
-• [Giuliano Araujo Bertoti](https://github.com/giulianobertoti)
+• [Emanuel Mineda Carneiro](https://github.com/mineda);<br>
+• [Giuliano Araujo Bertoti](https://github.com/giulianobertoti).
 ### Integrantes
-• [Lucas José Povinske](https://github.com/lucas-povinske)<br>
-• Rodrigo César Reis
+• [Lucas José Povinske](https://github.com/lucas-povinske);<br>
+• [Otavio Augusto Raposo Barreto](https://github.com/otavio-raposo);<br>
+• Rodrigo César Reis.
 
 ## 1. Apresentação
 Projeto com back-end em Java e front-end em Vue.js<br>
@@ -14,7 +15,7 @@ Este projeto foi feito para as disciplinas de Padrões de Projetos e Laboratóri
 A camada VIEW foi feita em Vue.js utilizando Axios para integração com a camada CONTROLLER que retorna através de protocolo HTTP as informações do banco em MySQL na camada MODEL, estruturada com Jpa / Hibernate.<br>
 
 Este repositório refere-se à camada VIEW do projeto;<br>
-O repositório referente às camadas MODEL e CONTROLLER se encontram [neste endereço](https://github.com/rodrigocr16/padroes_projetos).
+O repositório referente às camadas MODEL e CONTROLLER se encontram [neste endereço](https://github.com/rodrigocr16/mvc_model_controller).
 ___
 ## 2. Autenticação
 ![01_auth](https://github.com/rodrigocr16/vue-blank/blob/master/prints/01_invalid_auth.png)
