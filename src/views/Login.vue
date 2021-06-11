@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <img alt="app_logo" src="../assets/logo.png">
-    <form @submit.prevent="login" style="marginTop:50px">
+    <form @submit.prevent="auth" style="marginTop:50px">
         <h2>LOGIN</h2>
         <p id=usuario>
         <label for="username">Usuário</label><br>
@@ -18,19 +18,33 @@
 </template>
 
 <script>
-  import axios from 'axios';
-  import { mapMutations } from 'vuex';
-  import { mapGetters } from 'vuex';
+  import {
+    mapGetters,
+    mapMutations,
+    mapActions
+  } from 'vuex';
 
   export default {
     name: 'Home',
     data() {
       return {
         nome: '',
-        senha: '',
-        clearance: ''
+        senha: ''
       }
     },
+
+    methods: {
+      ...mapMutations(['setCodErro']),
+      
+      ...mapActions(['login']),
+
+      auth() {
+        this.login({ usuario: this.nome, senha: this.senha });
+        this.senha = '';
+        this.getErro;
+      },      
+    },
+
     mounted() {
       this.setCodErro('');
     },
@@ -38,54 +52,11 @@
       ...mapGetters([
         'getErro'
       ])
-    },
-    methods: {
-      ...mapMutations([
-        'setUsuario',
-        'setSenha',
-        'setLogado',
-        'setCodErro',
-        'setAdmin'
-      ]),
-      login() {
-        
-        axios.get('usuario', {
-          params: { "nomeUsuario" : this.nome }, headers: { Accept: 'application/json' },
-          auth: { username: this.nome, password: this.senha }
-        })
-        .then(res => {
-          console.log(res);
-          this.sucesso();
-          this.clearance = res.data;
-          if(this.clearance.classificacao > 0) { this.setAdmin(); }
-        })
-        .catch(error => {
-          this.setCodErro('Usuário/senha inválido(s)!');
-          console.log(error);
-          switch(error.response.status){
-            case 400: console.log('Bad request');
-              break;
-            case 401: console.log('Senha inválida!');
-              break;
-            case 404: console.log('Usuário não cadastrado!');
-              break;
-            default: this.sucesso();
-            }
-            this.nome = '';
-            this.senha = '';
-        });
-      },
-      sucesso(){
-        this.setCodErro('');
-        this.setUsuario(this.nome);
-        this.setSenha(this.senha);
-        this.setLogado();
-        this.$router.push('/');
-      }
-      
-    }
+    }    
   }
+
 </script>
+
 <style>
   form{
     position: initial;

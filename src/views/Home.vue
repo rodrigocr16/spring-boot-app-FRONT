@@ -15,12 +15,12 @@
         src="../assets/btn_grupo.png"
         @click="$router.push('/about')">
       </p>
-      <p v-if="getAdmin == true">
+      <p v-if="getRole == 'ROLE_ADMIN'">
         <img class="btn"
           width="400px"
           src="../assets/btn_usuario.png"
           @click="$router.push('/usuario')">
-        </p>
+      </p>
     </div>
   </div>
 </template>
@@ -30,7 +30,7 @@ import { mapGetters } from 'vuex';
 export default {
   computed: {
     ...mapGetters([
-      'getAdmin'
+      'getRole'
     ])
   },
   methods: {

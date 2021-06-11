@@ -13,7 +13,7 @@ Vue.use(VueRouter)
     name: 'Home',
     component: Home,
     beforeEnter: (to, from, next) => {
-      if(!store.state.logado) {
+      if(store.state.token == null) {
         router.push('/login');
       } else {
         next()
@@ -25,7 +25,7 @@ Vue.use(VueRouter)
     name: 'Usuario',
     component: Usuario,
     beforeEnter: (to, from, next) => {
-      if(store.state.app_adm){
+      if(store.state.token != null){
         next()
       } else {
         router.push('/');

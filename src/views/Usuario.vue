@@ -10,7 +10,7 @@
         <thead align="left">
           <tr>
             <th width="30%">Nome de Usuário</th>
-            <th width="30%">Senha</th>
+            <!--th width="30%">Senha</th-->
             <th width="40%">Nome de Exibição</th>
           </tr>
         </thead>
@@ -22,6 +22,7 @@
                 @click="del_show = true; del_usuario = lista.nomeUsuario">
               {{ lista.nomeUsuario }}
             </td>
+            <!--
             <td>
               <img class="btn"
                 src="../assets/btn_put.png"
@@ -32,6 +33,7 @@
                 ">
               {{ lista.senha }}
             </td>
+            -->
             <td>
               <img class="btn"
                 src="../assets/btn_put.png"
@@ -50,12 +52,6 @@
       <div v-if="put_show" id="put_form">
         <form @submit.prevent="atualizar">
           <h4>Usuário: {{ put_usuario }}</h4>
-          <div v-if="put_type == 'senha'" class="form-group" id="troca_senha">
-            Nova senha:<br>
-            <input type="text" id="put_senha"
-            class="form-control" required autofocus
-            v-model="put_senha">
-          </div>
           <div v-if="put_type == 'exibicao'" class="form_group" id="troca_exibicao">
             Novo nome de exibição:<br>
             <input type="text" id="put_exibicao"
@@ -138,9 +134,6 @@ export default {
         nomeUsuario: this.cad_usuario,
         senha: this.cad_senha,
         nomeExibicao:this.cad_exibicao
-      },
-      {
-        auth: { username: this.getUsuario, password: this.getSenha }
       })
       .then(res => {
         console.log(res);
@@ -154,13 +147,10 @@ export default {
     },
 
     atualizar(){
-      axios.put('usuario?nomeUsuario=' + this.put_usuario, {
+      axios.put('/usuario/' + this.put_usuario, {
         nomeUsuario: this.put_usuario,
         senha: this.put_senha,
         nomeExibicao: this.put_exibicao
-      },
-      {
-        auth: { username: this.getUsuario, password: this.getSenha }
       })
       .then(res => {
         console.log(res);
@@ -179,11 +169,7 @@ export default {
 
     deletar(){
       if(this.del_confirm == this.del_usuario){
-        axios.delete('usuario', {
-          params: { "nomeUsuario" : this.del_usuario },
-          headers: { Accept: 'application/json' },
-          auth: { username: this.getUsuario, password: this.getSenha }
-        })
+        axios.delete('/usuario/' + this.del_usuario)
         .then(res => {
           console.log(res);
           this.get();
@@ -204,8 +190,7 @@ export default {
     get(){
       axios.get('usuario', {
         params: { nomeUsuario: this.cad_usuario },
-        headers: { Accept: 'application/json' },
-        auth: { username: this.getUsuario, password: this.getSenha }
+        headers: { Accept: 'application/json' }
       })
       .then( res => {
         console.log(res);

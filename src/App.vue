@@ -6,7 +6,7 @@
       <router-link to="/about">Sobre</router-link>
       <a id="logout" 
          v-if="getLogado == true"
-         @click="$store.commit('setDeslogado'),
+         @click="$store.commit('logout'),
          $router.push('/login')
          "> Logout </a>
     </div>

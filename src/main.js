@@ -4,7 +4,26 @@ import store from './store'
 import router from './router'
 import axios from 'axios'
 
-axios.defaults.baseURL = 'https://8080-a99bf943-ee05-4766-878b-66f9e91d7689.ws-us02.gitpod.io'
+axios.interceptors.request.use(config => {
+  if(store.state.token) {
+  config.headers.Authorization = store.state.token
+  }
+  return config
+ })
+ axios.interceptors.response.use(res => {
+  return res
+  }, error => {
+  if(error.response.status === 403) {
+  alert('Não autorizado!')
+  }
+  else if (error.response.status === 401) {
+  store.commit('logout')
+  router.push('/login')
+  }
+  throw error
+ })
+
+axios.defaults.baseURL = 'https://8081-apricot-woodpecker-hiaw1el5.ws-us09.gitpod.io'
 
 Vue.config.productionTip = false
 
