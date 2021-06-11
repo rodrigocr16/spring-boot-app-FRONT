@@ -13,14 +13,20 @@ axios.interceptors.request.use(config => {
  axios.interceptors.response.use(res => {
   return res
   }, error => {
-  if(error.response.status === 403) {
-  alert('Não autorizado!')
-  }
-  else if (error.response.status === 401) {
-  store.commit('logout')
-  router.push('/login')
-  }
-  throw error
+  switch(error.response.status) {
+    case 401:{
+      store.commit('logout');
+      router.push('/login');
+    } break;
+    case 403:{
+      alert('Não autorizado');
+      router.push('/');
+    } break;
+    case 404: alert('Não encontrado');
+      break;
+    case 400: alert('Bad request');
+      break;
+  } throw error
  })
 
 axios.defaults.baseURL = 'https://8081-apricot-woodpecker-hiaw1el5.ws-us09.gitpod.io'
