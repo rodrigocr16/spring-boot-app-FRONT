@@ -4,7 +4,8 @@
 • [Emanuel Mineda Carneiro](https://github.com/mineda);<br>
 ### Integrantes
 • [Lucas José Povinske](https://github.com/lucas-povinske);<br>
-• Rodrigo César Reis.
+• Rodrigo César Reis;<br>
+• [Vitor Henrique da Silva Pereira](https://github.com/HPereiraVitor).<br>
 
 ## 1. Apresentação
 Projeto com back-end em Java e front-end em Vue.js<br>
